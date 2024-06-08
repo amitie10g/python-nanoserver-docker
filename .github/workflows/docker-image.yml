@@ -1,0 +1,123 @@
+name: Docker Image CI
+
+on:
+  workflow_dispatch:
+  schedule: 
+   - cron: '0 0 * */3 0'
+
+env:
+  TARGET_PYTHON_BASEURL:     https://www.python.org/ftp/python/
+  TARGET_PYTHON_GET_PIP_URL: https://bootstrap.pypa.io/get-pip.py
+  TARGET_PYTHON_PIP_VERSION: 24.0
+
+jobs:
+  Build:
+    strategy:
+      fail-fast: false
+      matrix:
+        TARGET_WINDOWS_VERSION: ["2022", "2019"]
+        TARGET_PYTHON_VERSION:
+          - 3.12.4
+          - 3.11.9
+          - 3.10.11
+          - 3.9.13
+          - 3.8.10
+          - 3.7.9
+    runs-on: windows-${{ matrix.TARGET_WINDOWS_VERSION }}
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+    - name: Login to Docker Hub
+      uses: docker/login-action@v3
+      with:
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_TOKEN }}
+    - name: Login to GHCR
+      uses: docker/login-action@v3
+      with:
+        registry: ghcr.io
+        username: ${{ github.repository_owner }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+    - name: build
+      shell: cmd
+      run: >
+        docker build
+        -t ${{ secrets.DOCKERHUB_USERNAME }}/python-nanoserver:${{ matrix.TARGET_PYTHON_VERSION }}-ltsc${{ matrix.TARGET_WINDOWS_VERSION }}
+        -t ghcr.io/${{ github.repository_owner }}/python-nanoserver:${{ matrix.TARGET_PYTHON_VERSION }}-${{ matrix.TARGET_WINDOWS_VERSION }}
+        --build-arg WINDOWS_VERSION=ltsc${{ matrix.TARGET_WINDOWS_VERSION }}
+        --build-arg PYTHON_VERSION=${{ matrix.TARGET_PYTHON_VERSION }}
+        --build-arg PYTHON_RELEASE=${{ matrix.TARGET_PYTHON_VERSION }}
+        --build-arg PYTHON_PIP_VERSION=${{ env.TARGET_PYTHON_PIP_VERSION }}
+        --build-arg PYTHON_GET_PIP_URL=${{ env.TARGET_PYTHON_GET_PIP_URL }}
+        .
+
+    - name: Tag latest
+      if: ${{ strategy.job-index == 0}}
+      run: |
+        docker tag ${{ secrets.DOCKERHUB_USERNAME }}/python-nanoserver:${{ matrix.TARGET_PYTHON_VERSION }}-ltsc${{ matrix.TARGET_WINDOWS_VERSION }} ${{ secrets.DOCKERHUB_USERNAME }}/python-nanoserver
+        docker tag ghcr.io/${{ github.repository_owner }}/python-nanoserver:${{ matrix.TARGET_PYTHON_VERSION }}-${{ matrix.TARGET_WINDOWS_VERSION }} ghcr.io/${{ github.repository_owner }}/python-nanoserver
+
+    - name: Tag ltsc2022
+      if: ${{ matrix.TARGET_WINDOWS_VERSION == 2022}}
+      run: |
+        docker tag ${{ secrets.DOCKERHUB_USERNAME }}/python-nanoserver:${{ matrix.TARGET_PYTHON_VERSION }}-ltsc${{ matrix.TARGET_WINDOWS_VERSION }} ${{ secrets.DOCKERHUB_USERNAME }}/python-nanoserver:${{ matrix.TARGET_PYTHON_VERSION }}
+        docker tag ghcr.io/${{ github.repository_owner }}/python-nanoserver:${{ matrix.TARGET_PYTHON_VERSION }}-${{ matrix.TARGET_WINDOWS_VERSION }} ghcr.io/${{ github.repository_owner }}/python-nanoserver:${{ matrix.TARGET_PYTHON_VERSION }}
+
+    - name: push
+      run: |
+        docker push ${{ secrets.DOCKERHUB_USERNAME }}/python-nanoserver --all-tags
+        docker push ghcr.io/${{ github.repository_owner }}/python-nanoserver --all-tags
+
+
+  Build313:
+    strategy:
+      fail-fast: false
+      matrix:
+        TARGET_WINDOWS_VERSION: ["2022", "2019"]
+        TARGET_PYTHON_VERSION:
+          - b2
+          - b1
+          - a6
+          - a5
+          - a4
+          - a3
+          - a2
+          - a1
+    runs-on: windows-${{ matrix.TARGET_WINDOWS_VERSION }}
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+    - name: Login to Docker Hub
+      uses: docker/login-action@v3
+      with:
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_TOKEN }}
+    - name: Login to GHCR
+      uses: docker/login-action@v3
+      with:
+        registry: ghcr.io
+        username: ${{ github.repository_owner }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+    - name: build
+      shell: cmd
+      run: >
+        docker build
+        -t ${{ secrets.DOCKERHUB_USERNAME }}/python-nanoserver:3.13.0${{ matrix.TARGET_PYTHON_VERSION }}-ltsc${{ matrix.TARGET_WINDOWS_VERSION }}
+        -t ghcr.io/${{ github.repository_owner }}/python-nanoserver:3.13.0${{ matrix.TARGET_PYTHON_VERSION }}-ltsc${{ matrix.TARGET_WINDOWS_VERSION }}
+        --build-arg WINDOWS_VERSION=ltsc${{ matrix.TARGET_WINDOWS_VERSION }}
+        --build-arg PYTHON_VERSION=3.13.0${{ matrix.TARGET_PYTHON_VERSION }}
+        --build-arg PYTHON_RELEASE=3.13.0
+        --build-arg PYTHON_PIP_VERSION=${{ env.TARGET_PYTHON_PIP_VERSION }}
+        --build-arg PYTHON_GET_PIP_URL=${{ env.TARGET_PYTHON_GET_PIP_URL }}
+        .
+
+    - name: Tag ltsc2022
+      if: ${{ matrix.TARGET_WINDOWS_VERSION == 2022}}
+      run: |
+        docker tag ${{ secrets.DOCKERHUB_USERNAME }}/python-nanoserver:${{ matrix.TARGET_PYTHON_VERSION }}-ltsc${{ matrix.TARGET_WINDOWS_VERSION }} ${{ secrets.DOCKERHUB_USERNAME }}/python-nanoserver:${{ matrix.TARGET_PYTHON_VERSION }}
+        docker tag ghcr.io/${{ github.repository_owner }}/python-nanoserver:${{ matrix.TARGET_PYTHON_VERSION }}-${{ matrix.TARGET_WINDOWS_VERSION }} ghcr.io/${{ github.repository_owner }}/python-nanoserver:${{ matrix.TARGET_PYTHON_VERSION }}
+
+    - name: push
+      run: |
+        docker push ${{ secrets.DOCKERHUB_USERNAME }}/python-nanoserver --all-tags
+        docker push ghcr.io/${{ github.repository_owner }}/python-nanoserver --all-tags
