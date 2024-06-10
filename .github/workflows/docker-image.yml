@@ -65,9 +65,9 @@ jobs:
       if: ${{ matrix.TARGET_WINDOWS_VERSION == 2022}}
       run: |
         docker tag ${{ secrets.DOCKERHUB_USERNAME }}/python-nanoserver:${{ matrix.TARGET_PYTHON_VERSION }}-ltsc${{ matrix.TARGET_WINDOWS_VERSION }} ${{ secrets.DOCKERHUB_USERNAME }}/python-nanoserver:${{ matrix.TARGET_PYTHON_VERSION }}
-        docker tag ghcr.io/${{ github.repository_owner }}/python-nanoserver:${{ matrix.TARGET_PYTHON_VERSION }}-${{ matrix.TARGET_WINDOWS_VERSION }} ghcr.io/${{ github.repository_owner }}/python-nanoserver:${{ matrix.TARGET_PYTHON_VERSION }}
+        docker tag ghcr.io/${{ github.repository_owner }}/python-nanoserver:${{ matrix.TARGET_PYTHON_VERSION }}-ltsc${{ matrix.TARGET_WINDOWS_VERSION }} ghcr.io/${{ github.repository_owner }}/python-nanoserver:${{ matrix.TARGET_PYTHON_VERSION }}
         docker tag ${{ secrets.DOCKERHUB_USERNAME }}/python-nanoserver:$("${{ matrix.TARGET_PYTHON_VERSION }}" -replace '\.\d+$', '')-ltsc${{ matrix.TARGET_WINDOWS_VERSION }} ${{ secrets.DOCKERHUB_USERNAME }}/python-nanoserver:$("${{ matrix.TARGET_PYTHON_VERSION }}" -replace '\.\d+$', '')
-        docker tag ghcr.io/${{ github.repository_owner }}/python-nanoserver:$("${{ matrix.TARGET_PYTHON_VERSION }}" -replace '\.\d+$', '')-${{ matrix.TARGET_WINDOWS_VERSION }} ghcr.io/${{ github.repository_owner }}/python-nanoserver:$("${{ matrix.TARGET_PYTHON_VERSION }}" -replace '\.\d+$', '')
+        docker tag ghcr.io/${{ github.repository_owner }}/python-nanoserver:$("${{ matrix.TARGET_PYTHON_VERSION }}" -replace '\.\d+$', '')-ltsc${{ matrix.TARGET_WINDOWS_VERSION }} ghcr.io/${{ github.repository_owner }}/python-nanoserver:$("${{ matrix.TARGET_PYTHON_VERSION }}" -replace '\.\d+$', '')
 
     - name: push
       run: |
