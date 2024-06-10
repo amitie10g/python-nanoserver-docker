@@ -39,7 +39,6 @@ jobs:
         username: ${{ github.repository_owner }}
         password: ${{ secrets.GITHUB_TOKEN }}
     - name: build
-      shell: cmd
       run: >
         docker build
         -t ${{ secrets.DOCKERHUB_USERNAME }}/python-nanoserver:${{ matrix.TARGET_PYTHON_VERSION }}-ltsc${{ matrix.TARGET_WINDOWS_VERSION }}
