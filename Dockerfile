@@ -6,7 +6,7 @@ ARG PYTHON_RELEASE=3.7.4
 # if this is called "PIP_VERSION", pip explodes with "ValueError: invalid truth value '<VERSION>'"
 ARG PYTHON_PIP_VERSION=20.0.2
 # https://github.com/pypa/get-pip
-ARG PYTHON_GET_PIP_URL=https://github.com/pypa/get-pip/raw/d59197a3c169cef378a22428a3fa99d33e080a5d/get-pip.py
+ARG PYTHON_GET_PIP_URL=https://bootstrap.pypa.io/get-pip.py
 
 USER ContainerAdministrator
 
@@ -68,4 +68,5 @@ RUN pip install virtualenv
 
 USER ContainerUser
 
+WORKDIR C:\\Users\\ContainerUser
 CMD ["python"]
