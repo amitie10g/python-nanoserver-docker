@@ -30,7 +30,9 @@ RUN pip install <whatever you need>
 USER ContainerUser
 ```
 
-If you want to use this base image within GitHub Actions, consider to use the GitHub Container Registry: ``ghcr.io/amitie10g/python-nanoserver``.
+If you want to use this base image within GitHub Actions, consider to use the GitHub Container Registry:
+
+``ghcr.io/amitie10g/python-nanoserver``
 
 ## How to build
 
