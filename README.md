@@ -4,7 +4,7 @@
 
 Windows Nano Server is an SKU designed for the cloud computing environment. But Nano Server is entirely different between the traditional Windows Server operating system. It is just a minimal subset of the existing Windows operating system, so many capabilities are missing.
 
-This repository contains a Python docker image build script for Windows Nano Server.
+This repository contains a Python docker image build script for Windows Nano Server. For instance, only Python3 is supported.
 
 [Docker Hub](https://hub.docker.com/r/amitie10g/python-nanoserver) | [GitHub Container Registry](https://github.com/amitie10g/python-nanoserver/pkgs/container/python-nanoserver)
 
