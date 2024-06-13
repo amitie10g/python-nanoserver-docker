@@ -4,16 +4,33 @@
 
 Windows Nano Server is an SKU designed for the cloud computing environment. But Nano Server is entirely different between the traditional Windows Server operating system. It is just a minimal subset of the existing Windows operating system, so many capabilities are missing.
 
-This repository contains a Python docker image build script for Windows Nano Server. For instance, only Python3 is supported.
+This repository contains a Python docker image build script and aaa GitHub Actions workflow for Windows Nano Server. For instance, only Python3 is supported.
 
 [Docker Hub](https://hub.docker.com/r/amitie10g/python-nanoserver) | [GitHub Container Registry](https://github.com/amitie10g/python-nanoserver/pkgs/container/python-nanoserver)
 
 ## How to use
 
+### From command line
+
 ```powershell
 docker pull amitie10g/python-nanoserver:latest
 docker run -it amitie10g/python-nanoserver:latest
 ```
+
+### As base imaage
+
+```dockerfile
+FROM amitie10g/python-nanoserver
+
+COPY / C:\\Users\\ContainerUser
+
+USER ContainerAdministrator
+RUN pip install <whatever you need>
+
+USER ContainerUser
+```
+
+If you want to use this base image within GitHub Actions, consider to use the GitHub Container Registry: ``ghcr.io/amitie10g/python-nanoserver``.
 
 ## How to build
 
@@ -42,3 +59,22 @@ This image includes pip and virtualenv.
 ## Django Example
 
 The `django_example` directory contains how to build a Nano Server-based Django application container.
+
+## Chocolatey?
+Python3 (and Python2) can be downloaded using [Chocolatey](https://github.com/amitie10g/chocolatey-docker/pkgs/container/chocolatey) Windows Server-based image and copied to Nano Server and will work as well, but the resulting image will be slightly larger than this base image. Just replace everything in the build step with:
+
+```dockerfile
+FROM amitie10g/chocolatey
+
+USER ContainerAdministrator
+ARG PYTHON_VERSION=312
+RUN choco install -y python$PYTHON_VERSION --params "/InstallDir:C:\Python"
+```
+
+This will install Python 3.12.4 and pip.
+
+## Why I've forked this?
+To provide up to date versions of Python3 (Jung Hyun Nam pushed the image until the version 3.9, three years ago). I've pushed from 3.7 to 3.12.
+
+## License
+Jung Hyun Nam haven't provided a license for his project. So, I released my fork (until permited, at least the GitHub Actions workflow) into the Public domain (the Unlicense).
