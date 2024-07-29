@@ -2,8 +2,10 @@ name: Docker Image CI
 
 on:
   workflow_dispatch:
-  schedule: 
-   - cron: '0 0 * */3 0'
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
 
 env:
   TARGET_PYTHON_BASEURL:     https://www.python.org/ftp/python/
