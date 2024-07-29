@@ -22,7 +22,6 @@ jobs:
           - 3.10.11
           - 3.9.13
           - 3.8.10
-          - 3.7.9
     runs-on: windows-${{ matrix.TARGET_WINDOWS_VERSION }}
     steps:
     - name: Checkout
