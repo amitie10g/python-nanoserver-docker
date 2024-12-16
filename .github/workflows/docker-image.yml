@@ -2,10 +2,6 @@ name: Docker Image CI
 
 on:
   workflow_dispatch:
-  push:
-    branches: [ "master" ]
-  pull_request:
-    branches: [ "master" ]
 
 env:
   TARGET_PYTHON_BASEURL:     https://www.python.org/ftp/python/
