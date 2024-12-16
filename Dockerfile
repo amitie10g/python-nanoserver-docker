@@ -1,5 +1,5 @@
 ARG WINDOWS_VERSION
-FROM mcr.microsoft.com/windows/servercore:$WINDOWS_VERSION
+FROM mcr.microsoft.com/windows/servercore:ltsc2022
 
 ARG PYTHON_VERSION=3.12.4
 ARG PYTHON_RELEASE=3.12.4
