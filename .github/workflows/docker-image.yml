@@ -60,6 +60,7 @@ jobs:
         --build-arg PYTHON_RELEASE=${{ matrix.TARGET_PYTHON_VERSION }}
         --build-arg PYTHON_PIP_VERSION=${{ env.TARGET_PYTHON_PIP_VERSION }}
         --build-arg PYTHON_GET_PIP_URL=${{ env.TARGET_PYTHON_GET_PIP_URL }}
+        --isolation=hyperv
         .
 
     - name: Tag latest
