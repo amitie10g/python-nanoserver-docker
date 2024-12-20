@@ -15,7 +15,6 @@ jobs:
       fail-fast: false
       matrix:
         TARGET_WINDOWS_VERSION:
-        - ltsc2025
         - ltsc2022
         - ltsc2019
         - 20H2
