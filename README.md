@@ -17,7 +17,7 @@ docker pull amitie10g/python-nanoserver:latest
 docker run -it amitie10g/python-nanoserver:latest
 ```
 
-### As base imaage
+### As base image
 
 ```dockerfile
 FROM amitie10g/python-nanoserver
