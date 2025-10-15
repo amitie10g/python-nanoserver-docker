@@ -76,7 +76,7 @@ RUN choco install -y python$PYTHON_VERSION --params "/InstallDir:C:\Python"
 This will install Python 3.12.4 and pip.
 
 ## Why I've forked this?
-To provide up to date versions of Python3 (Jung Hyun Nam pushed the image until the version 3.9, three years ago). I've pushed from 3.7 to 3.12.
+To provide up to date versions of Python3 (Jung Hyun Nam pushed the image until the version 3.9, three years ago). I've pushed from 3.7 to 3.13.
 
 ## License
 Jung Hyun Nam haven't provided a license for his project. So, I released my fork (until permited, at least the GitHub Actions workflow) into the Public domain (the Unlicense).
