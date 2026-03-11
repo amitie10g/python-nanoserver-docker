@@ -1,22 +1,11 @@
 # Python Docker Image for Nano Server
 
-<<<<<<< HEAD
-[![Docker Image CI](https://github.com/amitie10g/python-nanoserver/actions/workflows/docker-image.yml/badge.svg)](https://github.com/amitie10g/python-nanoserver/actions/workflows/docker-image.yml)
-=======
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
->>>>>>> 0b01599406df8d821eb83e213466198e73114e90
 
 Windows Nano Server is an SKU designed for the cloud computing environment. But Nano Server is entirely different between the traditional Windows Server operating system. It is just a minimal subset of the existing Windows operating system, so many capabilities are missing.
 
-This repository contains a Python docker image build script and aaa GitHub Actions workflow for Windows Nano Server. For instance, only Python3 is supported.
+This repository contains a Python docker image build script for Windows Nano Server.
 
-<<<<<<< HEAD
-[Docker Hub](https://hub.docker.com/r/amitie10g/python-nanoserver) | [GitHub Container Registry](https://github.com/amitie10g/python-nanoserver/pkgs/container/python-nanoserver)
-
-## How to use
-
-### From command line
-=======
 **Container Registries:**
 - [Docker Hub](https://hub.docker.com/repository/docker/rkttu/python-nanoserver)
 - [GitHub Container Registry](https://github.com/rkttu/python-nanoserver/pkgs/container/python-nanoserver) (Automated builds)
@@ -43,38 +32,18 @@ docker run -it ghcr.io/rkttu/python-nanoserver:3.12.3_ltsc2025
 ```
 
 ### Pull from Docker Hub (Legacy)
->>>>>>> 0b01599406df8d821eb83e213466198e73114e90
 
 ```powershell
-docker pull amitie10g/python-nanoserver:latest
-docker run -it amitie10g/python-nanoserver:latest
+docker pull rkttu/python-nanoserver:3.8.3_2004
+docker run -it rkttu/python-nanoserver:3.8.3_2004
 ```
 
-<<<<<<< HEAD
-### As base image
-
-```dockerfile
-FROM amitie10g/python-nanoserver
-
-COPY / C:\\Users\\ContainerUser
-
-USER ContainerAdministrator
-RUN pip install <whatever you need>
-
-USER ContainerUser
-```
-
-If you want to use this base image within GitHub Actions, consider to use the GitHub Container Registry:
-
-``ghcr.io/amitie10g/python-nanoserver``
-=======
 ### Available Tags
 
 Images are tagged in the format: `{python_version}_{windows_version}`
 
 - Python versions: Latest stable releases for each minor version (e.g., 3.9.x, 3.10.x, 3.11.x, 3.12.x, 3.13.x)
 - Windows versions: `ltsc2025`, `ltsc2022`, `ltsc2019`
->>>>>>> 0b01599406df8d821eb83e213466198e73114e90
 
 ## How to build
 
@@ -104,26 +73,18 @@ This image includes pip and virtualenv.
 
 The `django_example` directory contains how to build a Nano Server-based Django application container.
 
-## Chocolatey?
-Python3 (and Python2) can be downloaded using [Chocolatey](https://github.com/amitie10g/chocolatey-docker/pkgs/container/chocolatey) Windows Server-based image and copied to Nano Server and will work as well, but the resulting image will be slightly larger than this base image. Just replace everything in the build step with:
+## Contribution
 
-```dockerfile
-FROM amitie10g/chocolatey
+I tested this Docker image for Windows Nano Server 1809. If you make a docker image for another version of Windows, please make a pull request with some tests.
 
-USER ContainerAdministrator
-ARG PYTHON_VERSION=312
-RUN choco install -y python$PYTHON_VERSION --params "/InstallDir:C:\Python"
-```
+### Test Criteria
 
-This will install Python 3.12.4 and pip.
+- The image you built should support the pip tool.
+- The image you built should support the virtualenv tool.
+- The image you built can install Django via a virtualenv isolated environment.
+- The image you built can install AWS CLI, and it does not display .py file association missing error.
+- More testing criteria are welcome!
 
-<<<<<<< HEAD
-## Why I've forked this?
-To provide up to date versions of Python3 (Jung Hyun Nam pushed the image until the version 3.9, three years ago). I've pushed from 3.7 to 3.13.
-
-## License
-Jung Hyun Nam haven't provided a license for his project. So, I released my fork (until permited, at least the GitHub Actions workflow) into the Public domain (the Unlicense).
-=======
 ## Automated CI/CD Pipeline
 
 This repository now includes an automated CI/CD pipeline that:
@@ -163,4 +124,3 @@ If available, I want to contribute this repository to the official Python Docker
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
->>>>>>> 0b01599406df8d821eb83e213466198e73114e90
